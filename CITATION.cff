@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use LITMUS, please cite the paper below."
+title: "LITMUS"
+type: software
+authors:
+  - family-names: "Rosing"
+    given-names: "James H."
+    orcid: "https://orcid.org/0009-0009-0911-1915"
+repository-code: "https://github.com/jamesrosing/litmus"
+keywords:
+  - "artificial intelligence in medicine"
+  - "clinical AI safety"
+  - "verification"
+  - "fail-closed systems"
+  - "admissible set"
+preferred-citation:
+  type: generic
+  title: "Litmus: The Admissible Set"
+  authors:
+    - family-names: "Rosing"
+      given-names: "James H."
+      orcid: "https://orcid.org/0009-0009-0911-1915"
+  year: 2026
+  doi: "10.5281/zenodo.21227402"
+  publisher:
+    name: "Zenodo"
+references:
+  - type: generic
+    title: "Litmus: The Admissible Set (System Architecture)"
+    authors:
+      - family-names: "Rosing"
+        given-names: "James H."
+        orcid: "https://orcid.org/0009-0009-0911-1915"
+    year: 2026
+    doi: "10.5281/zenodo.21227855"
+    publisher:
+      name: "Zenodo"
