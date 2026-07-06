@@ -7,6 +7,9 @@ authors:
     given-names: "James H."
     orcid: "https://orcid.org/0009-0009-0911-1915"
 repository-code: "https://github.com/jamesrosing/litmus"
+license: MIT
+version: 0.1.0
+date-released: "2026-07-06"
 keywords:
   - "artificial intelligence in medicine"
   - "clinical AI safety"

@@ -1,8 +1,21 @@
 # LITMUS
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21227401.svg)](https://doi.org/10.5281/zenodo.21227401)
+
 A fail-closed grounding layer: a gate that lets a generated claim act only when the claim carries a warrant the gate can re-check against the domain's source of truth, and refuses by default otherwise.
 
 The name is the function. A litmus test is the everyday term for a simple check that tells you something true.
+
+## Publications
+
+LITMUS implements the verification method set out in these papers. The first
+makes the argument; the second specifies the system architecture.
+
+Rosing, J. H. (2026). *Litmus: The Admissible Set*. Zenodo.
+https://doi.org/10.5281/zenodo.21227402
+
+Rosing, J. H. (2026). *Litmus: The Admissible Set (System Architecture)*.
+Zenodo. https://doi.org/10.5281/zenodo.21227855
 
 ## Status
 
