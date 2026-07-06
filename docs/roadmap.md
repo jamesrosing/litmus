@@ -4,7 +4,7 @@ LITMUS is built bottom-up out of real verticals, not designed top-down and then 
 
 ## The four steps to concrete
 
-1. Finish and recognize the first vertical. The FAL marketing pull request is the first LITMUS instance, not a separate effort. It makes a claim carry a re-checkable warrant (a message is recorded as sent only with a provider SID; a response is counted only when it traces to a send row by phone), refuses by default when the warrant is absent, and routes the high-stakes compliance case through one auditable gate. The step is to land it once its load-bearing verification results return green, and to name it as the first vertical. See `verticals/01-fal-marketing.md`.
+1. Finish and recognize the first vertical. The FAL marketing pull request is the first LITMUS instance, not a separate effort. It makes a claim carry a re-checkable warrant (a message is recorded as sent only with a provider SID; a response is counted only when it traces to a send row by phone), refuses by default when the warrant is absent, and routes the high-stakes compliance case through one auditable gate. The step is to land it once its load-bearing verification results return green, and to name it as the first vertical. Its write-up is published to `verticals/` at that point.
 
 2. Name the pattern without extracting it. When the first vertical lands, record in plain terms that it is a grounding gate: here is the claim, here is the warrant, here is the refusal path. Do not create a shared package and do not generalize the types. The note is the marker that lets the shape be seen later; the code stays local to the vertical.
 

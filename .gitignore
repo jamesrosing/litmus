@@ -11,3 +11,5 @@ build/
 .idea/
 .vscode/
 *.log
+# vertical write-ups held back until representative
+verticals/01-fal-marketing.md

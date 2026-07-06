@@ -22,7 +22,7 @@ Zenodo. https://doi.org/10.5281/zenodo.21227855
 Early, and deliberately so. This repository is the source of truth for the project's principles, architecture, and verticals. LITMUS is built bottom-up: the contract is not a starting artifact, it is the shape extracted once two real verticals share it.
 
 - Principles, synthesis, and architecture: written, in `docs/`.
-- Vertical 01, FAL marketing (SMS delivery-truth and response attribution): in implementation, the first real instance. See `verticals/01-fal-marketing.md`.
+- Vertical 01, FAL marketing (SMS delivery-truth and response attribution): in implementation, the first real instance. Its write-up lands in `verticals/` once it is representative of a running vertical.
 - The portable contract: not yet extracted, by design. See `docs/roadmap.md` and `reference/contract.ts`.
 
 ## The problem
@@ -43,7 +43,7 @@ docs/
   architecture.md      The vertical-first architecture, with diagrams and the contract sketch.
   roadmap.md           The build order, the protocol-last sequence, and the immediate next steps.
 verticals/
-  01-fal-marketing.md  The first real instance, framed through the LITMUS lens.
+  (empty for now)      Write-ups of real instances, published once each runs.
 reference/
   contract.ts          The target type shape, not yet extracted. Reference, not a package.
 CONTRIBUTING.md        How a vertical is added and when the contract is allowed to exist.
@@ -51,7 +51,7 @@ CONTRIBUTING.md        How a vertical is added and when the contract is allowed 
 
 ## Where to start
 
-If you read in one direction, read `docs/why-litmus.md`, then `docs/synthesis.md`, then `docs/principles.md`, then `docs/architecture.md`, then `docs/roadmap.md`, then `verticals/01-fal-marketing.md`.
+If you read in one direction, read `docs/why-litmus.md`, then `docs/synthesis.md`, then `docs/principles.md`, then `docs/architecture.md`, then `docs/roadmap.md`.
 
 ## A note on this repository's own standard
 
