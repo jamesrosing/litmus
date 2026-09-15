@@ -26,4 +26,8 @@ Each phase pairs an action with a check, so the work can loop without constant c
 
 ## Immediate next action
 
-Land the FAL pull request once its three load-bearing results return green, then write the one-paragraph note that names its gate as the first LITMUS vertical. Everything else follows from having two real instances, and the project is one vertical away from that rather than at the beginning.
+Three verticals now run and are recorded in `verticals/`, so the step this section used to name is done and the sequence has moved on. The next action is the extraction refactor, and it is now the only thing standing between this repository and a portable spine.
+
+The test is the one stated in `CONTRIBUTING.md` and it is concrete. Take the verifier interface, the claim, the warrant and the verdict as they appear in WRIT and in CHART, and refactor both behind one set of types. Neither may be bent to fit. If they will not sit behind the same types, keep them separate and revise `reference/contract.ts`, because that outcome is information rather than failure.
+
+Two things the three records surfaced should be settled by the same refactor. The verdict needs to carry the difference between a refuted check and one that could not complete, which WRIT has and the sketch does not. And it needs to carry the difference between soundness and completeness, which CHART has and the sketch does not: a gate that can prove every claim it passed was warranted, but not that it examined every claim, has to be able to say so.

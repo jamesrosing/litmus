@@ -22,8 +22,11 @@ Zenodo. https://doi.org/10.5281/zenodo.21227855
 Early, and deliberately so. This repository is the source of truth for the project's principles, architecture, and verticals. LITMUS is built bottom-up: the contract is not a starting artifact, it is the shape extracted once two real verticals share it.
 
 - Principles, synthesis, and architecture: written, in `docs/`.
-- Vertical 01, FAL marketing (SMS delivery-truth and response attribution): in implementation, the first real instance. Its write-up lands in `verticals/` once it is representative of a running vertical.
-- The portable contract: not yet extracted, by design. See `docs/roadmap.md` and `reference/contract.ts`.
+- Three verticals run, and are recorded in `verticals/`: WRIT, citation verification for medical-necessity appeal packets; CHART, span verification for extracted payer policy criteria; MARK, numeric grounding and citation tiering for household tax answers. Each record carries the results that ground it, meaning checks that returned green rather than checks that should.
+- A fourth, FAL marketing (SMS delivery-truth and response attribution), is in implementation and is not recorded here until its gate's results are on record.
+- The portable contract: not yet extracted, and the precondition is now met rather than pending. Three verticals share the shape, and the refactor that would prove it, both verifiers sitting behind the same types without either being bent to fit, has not been performed. Until it is, `reference/contract.ts` stays a sketch. See `docs/roadmap.md`.
+
+One finding from the three belongs in the status rather than buried in a record. The architecture expects a derivational warrant for high-stakes claims wherever the domain admits a re-execution, and in the two highest-stakes verticals the domain does not admit one. There is no query to re-run that establishes medical necessity or what a policy requires. Both therefore run the referential mode built to be hard to game, with the human escalation path carrying what the warrant cannot, and only MARK carries a genuinely derivational component in its recomputed figures. This is the taxonomy working, not failing: it named which mode each vertical is in, and the answer was not the one the architecture anticipated.
 
 ## The problem
 
@@ -43,7 +46,9 @@ docs/
   architecture.md      The vertical-first architecture, with diagrams and the contract sketch.
   roadmap.md           The build order, the protocol-last sequence, and the immediate next steps.
 verticals/
-  (empty for now)      Write-ups of real instances, published once each runs.
+  01-writ-citation-verification.md   Appeal packets: only the gate marks a citation verified.
+  02-chart-span-verification.md      Policy criteria: untrusted proposer, deterministic verifier.
+  03-mark-numeric-grounding.md       Tax answers: every figure traces, or the answer is blocked.
 reference/
   contract.ts          The target type shape, not yet extracted. Reference, not a package.
 CONTRIBUTING.md        How a vertical is added and when the contract is allowed to exist.
