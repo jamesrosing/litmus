@@ -25,6 +25,12 @@ immediately: the verification standards themselves are unspecified. The essay
 says what access evaluators get. It does not say what verification consists
 of, and those are different questions. This is an attempt at the second one.
 
+One thing this essay is not. LITMUS does not evaluate frontier models, and
+nothing below proposes that it should. It is a claim-grounding layer for
+domains with a re-checkable source of truth, and frontier safety is not such a
+domain. What transfers is the verification vocabulary and four mechanisms,
+offered to the people who will have to answer the operative question.
+
 ## Two kinds of warrant
 
 A warrant is the justification a claim carries so that a gate can check it
@@ -97,12 +103,15 @@ load-bearing in systems where a wrong answer costs a person money or a
 clinician's signature. They are described in full in this repository's
 `verticals/` records.
 
-**1. The sole-writer invariant, enforced structurally.**
+**1. The sole-writer invariant.**
 
-In WRIT, exactly one module may mark a citation verified. This is not a
-convention. A test walks the entire source tree and fails by name if a second
-stamping site appears anywhere. It exists because a second writer had grown
-inside another gate, hand-copying the verification loop. That copy failed
+In WRIT, exactly one module may mark a citation verified. A test walks the
+`src/` tree and fails by name if any file other than the gate carries the
+literal stamp. It is a text scan over one directory, not a proof, and a second
+writer spelled as an assignment or living outside `src/` would pass it. What
+it does buy is that the obvious way to add one fails loudly in CI, by name,
+rather than being caught in review or not at all. It exists because a second
+writer had grown inside another gate, hand-copying the verification loop. That copy failed
 closed identically and was removed anyway, on the reasoning recorded in the
 file: a rule enforced in one place is a rule, and a rule enforced in two is a
 convention that drifts.
@@ -112,15 +121,18 @@ passed. Never the lab, and never a second internal path that happens to behave
 the same way today. Under the proposal as written, a lab self-attests and the
 evaluator's recourse is to publish a dissent. A sole-writer rule is the
 difference between an inspector and a commentator, and the point of the
-example is that it can be enforced by construction rather than by trust.
+example is that the rule can be given teeth in the build rather than left to
+everyone remembering it.
 
 **2. The untrusted half cannot reach the trusted half.**
 
 In CHART the extraction pipeline is split in two. The proposer is
-LLM-assisted and explicitly untrusted. The verifier is deterministic and is
-forbidden *by test* from importing the proposer or any model SDK. Nothing the
-proposer suggests becomes queryable unless the verifier confirms it from the
-source text alone.
+LLM-assisted and explicitly untrusted. The verifier is deterministic, and a test asserts
+that its static imports name neither the proposer nor the model SDK the
+project uses. That is a blacklist over one directory rather than a general
+prohibition: a different vendor's SDK, or a dynamic import, would pass it.
+Nothing the proposer suggests becomes queryable unless the verifier confirms
+it from the source text alone.
 
 The strength of that boundary was not argued, it was measured. The untrusted
 half was later replaced outright, the model proposer swapped for a
@@ -257,10 +269,12 @@ and not a calendar.
 
 I am a surgeon who builds verification systems. The mechanisms above are drawn
 from five production systems in healthcare claims, payer policy, clinical
-records, and personal finance, all of them fail-closed, all with their gates
-under test. The records are in this repository under `verticals/`, each
-carrying the results that ground it rather than a description of results that
-should exist.
+records, marketing delivery, and personal finance, all of them fail-closed,
+all with their gates under test. Three of the five are recorded in this
+repository under `verticals/`, each carrying the results that ground it rather
+than a description of results that should exist. The other two are not
+recorded yet, so treat what I say about them as an observation rather than as
+evidence.
 
 The project also keeps a standard it would rather not have needed. One of
 those systems carries a pre-registered kill test, tagged in git before any
@@ -273,6 +287,33 @@ evaluator regime is that organisations cannot be relied on to report their own
 failures. Any argument about verification should be willing to meet the
 standard it is asking for, and the cheapest way to check whether someone means
 it is to look for the failure they published when nobody would have known.
+
+---
+
+## Sources
+
+The primary text is Amodei's essay *We Must Pace the Frontier*, published 12
+September 2026, and it should be read directly rather than through this piece.
+I have not reproduced its wording here; the access terms and the three steps
+above are as summarised in contemporaneous coverage, including
+[explainx.ai's walkthrough of the proposal](https://www.explainx.ai/blog/dario-amodei-pace-the-frontier-embedded-evaluators-2026).
+The two remarks I attribute to Amodei, on the rate evaluators can keep up with
+and on the Swiss cheese model, were made in a broadcast interview around the
+essay's publication and are paraphrased rather than quoted, because the only
+transcript available to me was machine-generated.
+
+On the 2026 OpenAI agent cyberattacks, also called the Hugging Face incident:
+OpenAI's own report,
+[The Hugging Face incident and the road ahead](https://openai.com/index/hugging-face-incident-and-the-road-ahead/);
+contemporaneous reporting at
+[CNBC](https://www.cnbc.com/2026/08/26/open-ai-hugging-face-hack.html)
+and
+[TechCrunch](https://techcrunch.com/2026/08/26/openai-releases-its-official-report-on-the-hugging-face-breach/);
+and the
+[Wikipedia summary](https://en.wikipedia.org/wiki/2026_OpenAI_agent_cyberattacks).
+The figures above are drawn from that reporting. The characterisation of the
+disabled classifier is mine, and anyone assessing the argument should check it
+against the primary report rather than take it from me.
 
 ---
 
