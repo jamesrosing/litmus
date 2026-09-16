@@ -12,17 +12,19 @@ Underneath the gate there is one move, and it is the part that transfers.
 
 **Where an action would be dangerous, remove the authority to take it, rather than forbidding its use.**
 
-A rule that says *do not do this* is a rule somebody can decide to set aside, and the circumstance that supplies the reason is usually the one you were worried about. A system in which the dangerous action cannot be expressed has no such circumstance. The distinction sounds like a matter of degree and is not: it is the difference between a policy and a property.
+A rule that says *do not do this* is a rule somebody can decide to set aside, and the circumstance that supplies the reason is usually the one you were worried about. A system in which the dangerous action cannot be expressed has no such circumstance.
+
+It is a ladder rather than a switch, and being honest about which rung you are on is most of the value. The bottom rung is prose: a comment saying do not do this. The middle rung is a check that fails loudly and by name when someone does it anyway, which is where most of the mechanisms below sit, and which a commit can still remove. The top rung is a property the runtime cannot express at all, which is rarer and more expensive than it sounds. The claim here is only that moving up the ladder is worth doing deliberately, and that a middle rung honestly labelled beats a top rung asserted.
 
 The three recorded verticals are three unrelated substrates and the same move appears in each.
 
-| Vertical | What could go wrong | How it is made unrepresentable |
+| Vertical | What could go wrong | What stands in the way, and how strongly |
 |---|---|---|
-| **WRIT** | A second code path quietly marks a citation verified | A test walks the whole source tree and fails by name on any second stamping site |
-| **CHART** | The verifier ends up consulting a model to judge a model | The verifier is forbidden by test from importing the proposer or any model SDK |
+| **WRIT** | A second code path quietly marks a citation verified | A test scans `src/` and fails by name on any file but the gate carrying the literal stamp |
+| **CHART** | The verifier ends up consulting a model to judge a model | A test asserts the verifier's static imports name neither the proposer nor the project's model SDK |
 | **MARK** | The verification engine reaches back into agent state | The engine is import-clean from agent and memory, held by a separability test |
 
-The same move recurs in two further systems whose records are not yet written, and it is recorded here only as an observation rather than as evidence: in an EHR where cross-tenant reads are inexpressible inside the database engine and an agent token structurally cannot sign or submit a claim, and in a messaging platform where every send decision collapses to a single fail-closed resolver.
+The same move recurs in two further systems whose records are not yet written, and it is recorded here only as an observation rather than as evidence: in an EHR where an agent or MCP token cannot sign, void or submit a claim because the route requires a human session, and in a messaging platform where every send decision collapses to a single fail-closed resolver. That EHR also isolates tenants by database namespace, but its own changelog records a cross-tenant leak fix and a deliberate aggregation path, so the isolation is a strong default rather than an impossibility, and it is named here as the weaker claim it is.
 
 None of this is a claim to constrain everything a model does. See **What LITMUS is not** below, which is the load-bearing section of this document.
 
@@ -36,11 +38,11 @@ A claim may carry one of two kinds of warrant. A referential warrant points at a
 
 ## Five rules that survived contact with production
 
-These are stated as constraints rather than aspirations, and each one is in the tree with a test behind it. The full set is in `docs/principles.md`; these five are the ones that generalise beyond the domain they were learned in.
+These are stated as constraints rather than aspirations, and each is drawn from a gate that runs. They are not the same list as `docs/principles.md`, which sets out the design principles the architecture obeys; these five were learned from the verticals afterwards and have no canonical home yet, which the extraction refactor in `docs/roadmap.md` should settle. Rule 5's enforcing test is database-backed and sits in the block `verticals/02` records as unable to execute in the sandbox used, so it is carried by CI rather than by a run this repository has witnessed.
 
-**1. One writer.** Exactly one module may mark a claim verified, and a test enforces it structurally rather than by convention. This was added after a second stamping site was found hand-copying the verification loop. It failed closed identically and was removed anyway: a rule enforced in one place is a rule, and a rule enforced in two is a convention that drifts.
+**1. One writer.** Exactly one module may mark a claim verified, and a test scanning `src/` fails by name when another file carries the stamp. A text scan is not a proof and an unusual spelling would pass it; what it buys is that the obvious way to add a second writer breaks the build loudly. This was added after a second stamping site was found hand-copying the verification loop. It failed closed identically and was removed anyway: a rule enforced in one place is a rule, and a rule enforced in two is a convention that drifts.
 
-**2. The untrusted half cannot reach the trusted half.** Where a model proposes and a deterministic checker disposes, the checker is forbidden by test from importing the proposer or any model SDK. This is the concrete answer to a model judging a model. CHART's boundary was later tested harder than most: the untrusted half was replaced outright, a model proposer swapped for a deterministic grammar, and the verifier was not modified to accommodate it.
+**2. The untrusted half cannot reach the trusted half.** Where a model proposes and a deterministic checker disposes, a test asserts the checker's static imports name neither the proposer nor the project's model SDK. It is a blacklist over one directory, so a different vendor's SDK or a dynamic import would pass it. This is the concrete answer to a model judging a model. CHART's boundary was later tested harder than most: the untrusted half was replaced outright, a model proposer swapped for a deterministic grammar, and the verifier was not modified to accommodate it.
 
 **3. The untrusted party never supplies the thing that makes checking easy.** CHART's extractor claims verbatim quotes and never character offsets; the verifier resolves the offsets itself. If the proposer could hand over offsets, verification would be circular, an audit of its own arithmetic. Ambiguity is a failure, never a guess.
 
