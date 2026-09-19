@@ -31,10 +31,12 @@ harder and more general problem, because most consequential claims cannot be
 re-executed at all. Three properties do the work.
 
 The proposer is untrusted and the verifier is deterministic, and they are
-separate code. That separation is a binding rule in the specification and it is
-enforced rather than asserted: a test fails if the verifier imports the proposer
-or any model SDK. The trusted half cannot consult a model to decide whether a
-model was right.
+separate code. That separation is a binding rule in the specification, and a test
+asserts that the verifier's static imports name neither the proposer nor the
+model SDK the project uses. That is a blacklist over one directory rather than
+a general prohibition: another vendor's SDK, or a dynamic import, would pass
+it. What it buys is that the obvious way to let the trusted half consult a
+model breaks the build by name.
 
 The untrusted half is never allowed to supply the thing that would make checking
 trivial. It claims a verbatim quote and never an offset. The verifier resolves
@@ -86,18 +88,23 @@ quietly becoming a weakening path.
 
 ## The verification results
 
-Run on 15 September 2026 against the repository at its then-current head.
+Run on 19 September 2026 against commit `1990f3b`.
 
 - The verifier's own suite, `packages/extract/test/verifier.test.ts`:
-  **11 tests, 11 passing**.
-- Full suite, `vitest run`: **813 tests passing, 0 assertion failures**. Of 106
-  test files, 34 could not execute in this sandbox because a system library
-  needed by the embedded Postgres used in database-backed tests is absent. I
-  confirmed the cause is uniform, being 68 error instances all of that one
-  fault, with no assertion failures among them. Continuous integration supplies
-  a real Postgres service and runs them.
+  **16 tests, 16 passing**. Five of those were added by the boundary-anchored
+  coverage fix that merged as chart#68, including one that pins the golden
+  floor so a later change to the matching rule cannot lower it quietly.
+- Full suite, `vitest run`: **841 tests passing, 420 skipped, 0 assertion
+  failures**. The skipped count is stated because a record that reports only
+  the passing count presents a sound result as a complete one, which is the
+  distinction this vertical is recorded for. Of 109 test files, 35 could not
+  execute in this sandbox because a system library needed by the embedded
+  Postgres used in database-backed tests is absent: 70 instances of that boot
+  failure, and one setup hook that timed out waiting, presumably on the same
+  database. No assertion failures among any of them. Continuous integration
+  supplies a real Postgres service and runs them.
 - The live state the gate has produced, as recorded in the vertical's progress
-  log: **91,350 verified criteria and 445,434 code mappings**, with zero
-  non-verified rows queryable. This is the Medicare corpus. Extension to
-  commercial payers is open work, and the figure should not be quoted without
-  that qualifier.
+  log's entry for the 4 September 2026 corpus sweep: **91,350 verified
+  criteria and 445,434 code mappings**, with zero non-verified rows queryable.
+  This is the Medicare corpus. Extension to commercial payers is open work, and
+  the figure should not be quoted without that qualifier.

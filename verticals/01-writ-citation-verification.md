@@ -27,7 +27,20 @@ that the source supports the claim attached to it rather than merely existing.
 No computation is re-run, so this is not the derivational mode, and the record
 should not claim it is. It is the referential mode held to principle 2: the
 entailment check is narrower and cheaper than the generation it gates, and the
-generator is structurally barred from performing it.
+generator never performs it; only the gate may, which is the sole-writer rule
+below.
+
+One qualification the vertical makes about itself belongs here. For Medicare
+citations the source is live CMS or a committed CMS snapshot. For commercial
+payer policies the source the verifier reads is a committed registry copy of
+the policy text, so the warrant is against the copy, and whether the copy still
+matches the payer's live document is a separate check. A snapshot script
+re-fetches each policy on a cadence and confirms every cited sentence is still
+verbatim present, but only where the policy's public URL is on record. A policy
+with no recorded URL is verified against the seeded copy alone and is disclosed
+in the registry as never re-checked. The vertical's own source says this was
+learned when payer-side wording drift went unnoticed until a payer rebutted a
+letter.
 
 The domain does not admit a re-execution for the thing that matters most. There
 is no query to re-run that establishes medical necessity, because necessity is a
@@ -38,10 +51,13 @@ physician, resting on citations that have been checked.
 
 One invariant carries the whole arrangement. The generator proposes and the gate
 disposes, and only the gate may mark a citation verified. That is stated as hard
-rule 1 in the vertical and enforced structurally rather than by convention: a
-test walks the source tree and fails by name if any file other than the gate
-stamps a citation verified. It was added after a second stamping site was found
-living in the policy-coverage gate, hand-copying the loop. That copy failed
+rule 1 in the vertical and given teeth by a test rather than left to
+convention: the test scans the `src/` tree and fails by name if any file other
+than the gate carries the literal stamp. It is a text scan over one directory,
+not a proof, and a second writer spelled as an assignment or living outside
+`src/` would pass it; what it buys is that the obvious way to add one breaks
+the build loudly. It was added after a second stamping site was found living
+in the policy-coverage gate, hand-copying the loop. That copy failed
 closed identically and was removed anyway, on the reasoning that a rule enforced
 in one place is a rule and a rule enforced in two is a convention that drifts.
 
@@ -80,10 +96,10 @@ medical licence.
 
 ## The verification results
 
-Run on 15 September 2026 against the repository at its then-current head.
+Run on 19 September 2026 against commit `25f132f`.
 
-- Full suite, `npx tsx --test tests/*.test.ts`: **2,371 tests, 2,371 passing,
-  0 failing**, across 501 suites.
+- Full suite, `npx tsx --test tests/*.test.ts`: **2,474 tests, 2,473 passing,
+  0 failing, 1 skipped**, across 518 suites.
 - The structural invariant has its own suite, `tests/litmus-sole-writer.test.ts`,
   which asserts that no file under `src/` other than the gate stamps a citation
   verified. Green.

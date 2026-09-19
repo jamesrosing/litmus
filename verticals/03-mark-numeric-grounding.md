@@ -99,7 +99,8 @@ measurable surface rather than as silent attrition.
 
 ## The verification results
 
-Run on 15 September 2026 against the repository at its then-current head.
+Run on 19 September 2026 against commit `ddc3cbf`, which is also the head the
+15 September run used; the repository has not moved between them.
 
 - The gate's own package, `packages/verify`: **28 tests, 28 passing**, across
   the numeric-leak validator, the citation checker, and a separability test that
@@ -109,5 +110,9 @@ Run on 15 September 2026 against the repository at its then-current head.
   credentials that are not present; I confirmed both failures are that one
   cause.
 - The golden evaluation set, which the vertical treats as a merge gate rather
-  than a report, has stood at 100 per cent since the fourth build session, and
-  nothing merges below it.
+  than a report, is recorded in its README at 100 per cent since the fourth
+  build session, and nothing merges below it. The earlier sessions' figures are
+  not on record here, so this record cannot say whether that gate has been seen
+  to block, and by this project's own standard a gate never seen to block is
+  not by that fact known to work. The figure is offered as the bar that has
+  held, not as evidence the bar bites.

@@ -27,7 +27,7 @@ Reduce the rate at which action-coupled systems commit to fluent, plausible, uns
 
 These are the prior corrections, stated as rules the architecture follows rather than as a list of regrets.
 
-First, prefer derivational warrants, and require them for high-stakes claims wherever a re-execution exists, because a re-execution is not gameable. Second, if a referential warrant is used, its entailment check must be cheaper and narrower than generation, a quoted span plus a small constrained checker, or the gate is relocating risk rather than removing it; the cleanest way to honor this in the first build is to seed on a domain whose ground truth is a re-execution, so the seed avoids a model judging a model entirely. Third, refuse by default but calibrate the verdict into grounded, escalated, or refused, with a per-domain escalation path and named error costs, and treat a high-stakes claim carrying only a referential warrant as an escalation, never a pass. Fourth, auditability is not trust; the ledger is evidence for a reviewer, not reassurance for a user, and the system does not claim the demand-side trust problem. Fifth, synchronous before asynchronous; build the per-claim path first and turn on the backlog monitor and cost meter only when a batch domain arrives. Sixth, cost is a guardrail, not telemetry; if verification stops being cheaper than generation, the gate is becoming a tax that only the well-resourced can pay. Seventh, protocol-last; the contract is extracted from two working verticals, not authored before either runs.
+First, prefer derivational warrants, and require them for high-stakes claims wherever a re-execution exists, because a re-execution is not gameable. Second, if a referential warrant is used, its entailment check must be cheaper and narrower than generation, a quoted span plus a small constrained checker, or the gate is relocating risk rather than removing it; the cleanest way to honor this in the first build is to seed on a domain whose ground truth is a re-execution, so the seed avoids a model judging a model entirely. Third, refuse by default but calibrate the verdict into grounded, escalated, or refused, with a per-domain escalation path and named error costs, and treat a high-stakes claim carrying only a referential warrant as an escalation, never a pass, except under the single condition principle 3 in `principles.md` states for a domain that has no derivational substrate at all. Fourth, auditability is not trust; the ledger is evidence for a reviewer, not reassurance for a user, and the system does not claim the demand-side trust problem. Fifth, synchronous before asynchronous; build the per-claim path first and turn on the backlog monitor and cost meter only when a batch domain arrives. Sixth, cost is a guardrail, not telemetry; if verification stops being cheaper than generation, the gate is becoming a tax that only the well-resourced can pay. Seventh, protocol-last; the contract is extracted from two working verticals, not authored before either runs.
 
 ## 4. Choosing the seed vertical
 
@@ -99,7 +99,7 @@ type Verdict =
 
 ## 7. Decision logic
 
-The gate tries re-execution first, sends a high-stakes claim that can only offer a referential warrant straight to escalation, and uses the entailment check only for low and medium stakes.
+The gate tries re-execution first, sends a high-stakes claim that can only offer a referential warrant straight to escalation unless the domain admits no re-execution and the vertical meets the three conditions of principle 3's exception, and uses the entailment check only for low and medium stakes. The flowchart below shows the default path.
 
 ```mermaid
 flowchart TD
@@ -173,7 +173,7 @@ flowchart LR
     P2["Phase 2<br/>Derivational verifier (re-run query)<br/>verify: a number that disagrees with<br/>recomputation is refused (TDD)"]
     P3["Phase 3<br/>Three-way gate plus one escalation<br/>verify: important mismatch escalates,<br/>not silently refused"]
     P4["Phase 4<br/>Second vertical: patch verification<br/>verify: fail-then-pass test gates<br/>the fix claim"]
-    P5["Phase 5<br/>Extract the contract by refactor<br/>verify: both verifiers plug in<br/>without changing each other"]
+    P5["Phase 5<br/>Extract the contract by refactor<br/>verify: every verifier plugs in<br/>without changing each other"]
     P6["Phase 6<br/>First batch vertical adds<br/>queue and cost meters<br/>verify: backlog and cost observable,<br/>alarms fire"]
     P0 --> P1 --> P2 --> P3 --> P4 --> P5 --> P6
 ```
@@ -183,7 +183,7 @@ flowchart LR
 3. Write the failing test first, where a stated number that disagrees with the recomputation is refused, then implement the query-runner verifier until it passes. Verify: red to green, and a number that matches its recomputation passes.
 4. Wire the three-way gate and one escalation path carrying the evidence and an error-cost field. Verify: a flagged-important mismatch escalates rather than passing or refusing in silence.
 5. Build the second vertical, patch verification, with a reproduction test that must fail before the change and pass after, run against the named path. Verify: a fix claim is refused unless the fail-then-pass transition holds.
-6. Extract the shared shape into the LITMUS contract by refactoring both verticals behind it. Verify: the query-runner and the test-runner both plug in without either being modified to fit. If they will not, keep them separate and revisit.
+6. Extract the shared shape into the LITMUS contract by refactoring the verticals behind it. Verify: every verifier plugs in without being modified to fit. If they will not, keep them separate and revisit.
 7. When the first batch vertical arrives, add the queue monitor and cost meter. Verify: per-claim verification cost and backlog are observable, and the alarms fire on seeded cases.
 
 The object is still not a universal verifier. It is two fail-closed verticals whose shared shape becomes a contract, a gate that prefers re-execution to citation, and a set of verifiers that do not generalize. Seeding on verified analytics rather than clinical appeal is the same principle applied to the first move: start where the ground truth is a cheap re-execution and no expert is in the loop, so the first thing built demonstrates grounding without leaning on a model to judge a model.
