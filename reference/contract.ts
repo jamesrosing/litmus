@@ -7,8 +7,8 @@
  * published, or imported anywhere.
  *
  * Do not build against this as if it were the contract. The contract earns its
- * existence at the refactor of two working verticals, not before. If the first
- * two verticals (FAL marketing, then a verified-analytics gate) do not in fact
+ * existence at the refactor of two working verticals, not before. If the three
+ * recorded verticals (WRIT, CHART and MARK; see verticals/) do not in fact
  * share this shape, the right move is to keep them separate and revise this
  * sketch, not to bend a vertical to fit it.
  */
@@ -32,7 +32,7 @@ interface Claim {
   domain: string;
   assertion: string; // the proposition or action proposed
   scope: unknown; // what the assertion is over
-  stakes: StakesTier; // high stakes require the derivational mode
+  stakes: StakesTier; // high stakes require the derivational mode where the domain admits one; principles.md rule 3 states the exception
   warrant: Warrant; // non-optional: there is no claim without a warrant
 }
 
